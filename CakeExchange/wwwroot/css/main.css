@@ -1,0 +1,31 @@
+.make-order {
+    display: inline-block;
+    width: 40%;
+    margin-left: 4%;
+    box-sizing: border-box;
+    border: solid 1px black;
+    vertical-align: top;
+}
+
+.make-order h4 { margin: 0 10px; }
+
+.make-order form {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.make-order input {
+    display: block;
+    margin: 15px 10px;
+}
+
+.make-order table {
+    margin: 15px 10px;
+    width: calc(100% - 20px);
+    border-spacing:0;
+    border-collapse: collapse;
+}
+
+.make-order table td {
+    border: 1px solid black;
+}

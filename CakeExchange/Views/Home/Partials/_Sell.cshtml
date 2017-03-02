@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Order>
+
+<h4>Продать</h4>
+
+@Html.Partial("Partials/_orderForm", "Sell")
+
+<h4>Ордера на покупку</h4>
+
+@Html.Partial("Partials/_ordersSheet", Model)

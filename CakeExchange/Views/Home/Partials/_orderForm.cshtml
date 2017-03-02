@@ -1,0 +1,10 @@
+﻿@model string
+
+@using (Html.BeginForm(Model, "Home", FormMethod.Post))
+{
+    <input type="number" name="Price" step="0.01" placeholder="Цена за штуку">
+    <input type="number" name="Number" step="1" placeholder="Количество">
+    <input type="text" name="Comment" placeholder="Комментарий">
+
+    <input type="submit" value="@(Model == "Buy" ? "Купить" : "Продать")"> @*TODO: use localization*@
+}

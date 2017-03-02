@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Cake Exchange</title>
+    <link rel="stylesheet" href="~/css/main.css"/>
+</head>
+<body>
+<div class="make-order">
+    @Html.Partial("Partials/_Buy", (IEnumerable<Order>)ViewBag.SellOrders)
+</div>
+<div class="make-order">
+    @Html.Partial("Partials/_Sell", (IEnumerable<Order>)ViewBag.BuyOrders)
+</div>
+
+</body>
+</html>
