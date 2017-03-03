@@ -25,10 +25,6 @@ namespace CakeExchange.Controllers
         {
             using (ExchangeContext dbContext = new ExchangeContext())
             {
-                decimal price;
-                decimal.TryParse(Request.Form["Price"], NumberStyles.Any, CultureInfo.InvariantCulture, out price);
-                buyOrder.Price = price; //TODO: Из браузера поступает только строка с "." разделителем, а CultureInfo указывает на ru-RU
-
                 dbContext.BuyOrders.Add(buyOrder);
                 dbContext.SaveChanges();
             }
@@ -41,10 +37,6 @@ namespace CakeExchange.Controllers
         {
             using (ExchangeContext dbContext = new ExchangeContext())
             {
-                decimal price;
-                decimal.TryParse(Request.Form["Price"], NumberStyles.Any, CultureInfo.InvariantCulture, out price);
-                sellOrder.Price = price; //TODO: Из браузера поступает только строка с "." разделителем, а CultureInfo указывает на ru-RU
-
                 dbContext.SellOrders.Add(sellOrder);
                 dbContext.SaveChanges();
             }

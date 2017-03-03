@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using CakeExchange.Attributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -8,12 +6,12 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace CakeExchange.Common.Binders
 {
-    public class ScrubbingModelBinder : IModelBinder
+    public class DecimalModelBinder : IModelBinder
     {
-        IScrubberAttribute _attribute;
+        IDecimalAttribute _attribute;
         SimpleTypeModelBinder _baseBinder;
 
-        public ScrubbingModelBinder(Type type, IScrubberAttribute attribute)
+        public DecimalModelBinder(Type type, IDecimalAttribute attribute)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
@@ -34,7 +32,7 @@ namespace CakeExchange.Common.Binders
                 // Attempt to scrub the input value
                 var valueAsString = valueProviderResult.FirstValue;
                 bool success;
-                var result = _attribute.Scrub(valueAsString, out success);
+                var result = _attribute.Parse(valueAsString, out success);
                 if (success)
                 {
                     bindingContext.Result = ModelBindingResult.Success(result);

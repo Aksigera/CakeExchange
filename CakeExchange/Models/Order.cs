@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using CakeExchange.Attributes;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CakeExchange.Models
 {
@@ -13,6 +15,7 @@ namespace CakeExchange.Models
         [Required]
         [Positive]
         [Column(TypeName = "decimal(10,2)")]
+        [DecimalAttribute]
         public decimal Price { get; set; }
 
 //        [Positive]

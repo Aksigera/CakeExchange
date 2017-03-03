@@ -32,7 +32,7 @@ namespace CakeExchange
             services.AddDbContext<ExchangeContext>(options => options.UseSqlServer(connection));
             services.AddMvc(config =>
             {
-//                config.ModelBinderProviders.Insert(0, new ScrubbingModelBinderProvider());
+                config.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
             });
         }
 

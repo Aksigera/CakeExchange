@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CakeExchange.Common.Binders
 {
-        public class ScrubbingModelBinderProvider : IModelBinderProvider
+        public class DecimalModelBinderProvider : IModelBinderProvider
     {
         public IModelBinder GetBinder(ModelBinderProviderContext context)
         {
@@ -19,8 +19,8 @@ namespace CakeExchange.Common.Binders
                 var propInfo = context.Metadata.ContainerType.GetProperty(propName);
 
                 // Only one scrubber attribute can be applied to each property
-                var attribute = propInfo.GetCustomAttributes(typeof(IScrubberAttribute), false).FirstOrDefault();
-                if (attribute != null) return new ScrubbingModelBinder(context.Metadata.ModelType, attribute as IScrubberAttribute);
+                var attribute = propInfo.GetCustomAttributes(typeof(DecimalAttribute), false).FirstOrDefault();
+                if (attribute != null) return new DecimalModelBinder(context.Metadata.ModelType, attribute as IDecimalAttribute);
             }
 
             return null;
