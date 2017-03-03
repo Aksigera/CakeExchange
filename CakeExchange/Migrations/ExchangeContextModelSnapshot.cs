@@ -67,6 +67,9 @@ namespace CakeExchange.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<int>("SellId");
 
                     b.Property<int>("Size");

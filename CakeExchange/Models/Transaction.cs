@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using CakeExchange.Data;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,14 @@ namespace CakeExchange.Models
 
         public int Size { get; set; }
 
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal Price { get; set; }
+
         public DateTime Date { get; set; }
+
+        public Transaction()
+        {
+        }
 
         public Transaction(Buy buy, Sell sell)
         {
@@ -33,12 +41,12 @@ namespace CakeExchange.Models
             using (ExchangeContext dbContext = new ExchangeContext())
             {
                 Buy buyHighest = dbContext.BuyOrders
-                    .Where(o=>o.IsActive)
+                    .Where(o => o.IsActive)
                     .OrderByDescending(o => o.Price)
                     .FirstOrDefault();
 
                 Sell sellLowest = dbContext.SellOrders
-                    .Where(o=>o.IsActive)
+                    .Where(o => o.IsActive)
                     .OrderBy(o => o.Price)
                     .FirstOrDefault();
 
@@ -61,12 +69,15 @@ namespace CakeExchange.Models
         {
             var deal = new List<Order> {Buy, Sell};
 
+            Price = deal.OrderBy(o => o.Date).First().Price;
             Size = deal.Select(o => o.Number).Min();
+
             foreach (Order order in deal)
             {
                 order.Number -= Size;
                 dbContext.Update(order);
             }
+
             dbContext.Add(this);
             dbContext.SaveChanges();
 

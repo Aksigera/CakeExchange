@@ -2,6 +2,7 @@
 using CakeExchange.Data;
 using CakeExchange.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CakeExchange.Controllers
 {
@@ -12,13 +13,19 @@ namespace CakeExchange.Controllers
             using (ExchangeContext dbContext = new ExchangeContext())
             {
                 ViewBag.BuyOrders = dbContext.BuyOrders
-                    .Where(o=>o.IsActive)
-                    .OrderByDescending(o=>o.Price)
+                    .Where(o => o.IsActive)
+                    .OrderByDescending(o => o.Price)
                     .ToList();
 
                 ViewBag.SellOrders = dbContext.SellOrders
-                    .Where(o=>o.IsActive)
-                    .OrderBy(o=>o.Price)
+                    .Where(o => o.IsActive)
+                    .OrderBy(o => o.Price)
+                    .ToList();
+
+                ViewBag.Transactions = dbContext.Transactions
+                    .OrderBy(t => t.Date)
+                    .Include(t => t.Buy)
+                    .Include(t => t.Sell)
                     .ToList();
             }
             return View();

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Transaction>
+
+<h4>Завершенные сделки</h4>
+
+
+<table>
+    <tr>
+        <th>Выполнено</th>
+        <th>Дата К</th>
+        <th>Дата П</th>
+        <th>Цена</th>
+        <th>Кол-во</th>
+        <th>Коммент. К</th>
+        <th>Коммент. П</th>
+    </tr>
+
+    @foreach (Transaction transaction in Model)
+    {
+        <tr>
+            <td>@transaction.Date.ToString("dd/mm/yyyy hh:mm")</td>
+            <td>@transaction.Buy.Date.ToString("dd/mm/yyyy hh:mm")</td>
+            <td>@transaction.Sell.Date.ToString("dd/mm/yyyy hh:mm")</td>
+            <td>@transaction.Price.ToString("G29")</td>
+            <td>@transaction.Size</td>
+            <td>@(transaction.Buy.Comment ?? "--")</td>
+            <td>@(transaction.Sell.Comment ?? "--")</td>
+        </tr>
+    }
+
+</table >
