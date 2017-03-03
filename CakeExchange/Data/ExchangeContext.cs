@@ -1,9 +1,10 @@
 ﻿using CakeExchange.Models;
+using EntityFrameworkCore.Triggers;
 using Microsoft.EntityFrameworkCore;
 
 namespace CakeExchange.Data
 {
-    public class ExchangeContext : DbContext
+    public class ExchangeContext : DbContextWithTriggers
     {
         public DbSet<Buy> BuyOrders { get; set; }
         public DbSet<Sell> SellOrders { get; set; }

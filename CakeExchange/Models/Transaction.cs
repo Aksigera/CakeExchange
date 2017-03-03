@@ -32,8 +32,15 @@ namespace CakeExchange.Models
         {
             using (ExchangeContext dbContext = new ExchangeContext())
             {
-                Buy buyHighest = dbContext.BuyOrders.OrderBy(o => o.Price).FirstOrDefault();
-                Sell sellLowest = dbContext.SellOrders.OrderBy(o => o.Price).FirstOrDefault();
+                Buy buyHighest = dbContext.BuyOrders
+                    .Where(o=>o.IsActive)
+                    .OrderByDescending(o => o.Price)
+                    .FirstOrDefault();
+
+                Sell sellLowest = dbContext.SellOrders
+                    .Where(o=>o.IsActive)
+                    .OrderBy(o => o.Price)
+                    .FirstOrDefault();
 
                 if (buyHighest == null || sellLowest == null)
                     return;
@@ -47,7 +54,7 @@ namespace CakeExchange.Models
 
         private bool IsAvailable()
         {
-            return Buy.Price <= Sell.Price;
+            return Buy.Price >= Sell.Price;
         }
 
         private void Make(DbContext dbContext)
@@ -58,8 +65,8 @@ namespace CakeExchange.Models
             foreach (Order order in deal)
             {
                 order.Number -= Size;
+                dbContext.Update(order);
             }
-
             dbContext.Add(this);
             dbContext.SaveChanges();
 

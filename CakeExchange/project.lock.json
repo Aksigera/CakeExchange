@@ -3,6 +3,52 @@
   "version": 2,
   "targets": {
     ".NETCoreApp,Version=v1.0": {
+      "CoContra/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Collections.Immutable": "1.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/CoContra.netstandard1.0.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/CoContra.netstandard1.0.dll": {}
+        }
+      },
+      "EntityFrameworkCore.Triggers/1.0.5": {
+        "type": "package",
+        "dependencies": {
+          "CoContra": "1.0.2",
+          "EntityFrameworkCore.TypedOriginalValues": "1.0.3",
+          "Microsoft.EntityFrameworkCore": "1.1.0",
+          "NETStandard.Library": "1.6.1",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/EntityFrameworkCore.Triggers.netstandard1.3.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/EntityFrameworkCore.Triggers.netstandard1.3.dll": {}
+        }
+      },
+      "EntityFrameworkCore.TypedOriginalValues/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.1.0",
+          "NETStandard.Library": "1.6.1",
+          "System.Reflection.Emit": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/EntityFrameworkCore.TypedOriginalValues.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/EntityFrameworkCore.TypedOriginalValues.dll": {}
+        }
+      },
       "Libuv/1.9.1": {
         "type": "package",
         "dependencies": {
@@ -2911,7 +2957,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.1/_._": {}
+          "ref/netstandard1.1/System.Reflection.Emit.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Reflection.Emit.dll": {}
@@ -2925,7 +2971,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {}
+          "ref/netstandard1.0/System.Reflection.Emit.ILGeneration.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Reflection.Emit.ILGeneration.dll": {}
@@ -2940,7 +2986,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {}
+          "ref/netstandard1.0/System.Reflection.Emit.Lightweight.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Reflection.Emit.Lightweight.dll": {}
@@ -3809,6 +3855,40 @@
     }
   },
   "libraries": {
+    "CoContra/1.0.2": {
+      "sha512": "1bqpTwXQlIBxTrq7LFoo2ODlDaXnWpZOPGT4W+g2UylJ1qAyUayZ2oejkNBydeimW9sDkcJNK27XSdQnLs1cGA==",
+      "type": "package",
+      "path": "cocontra/1.0.2",
+      "files": [
+        "cocontra.1.0.2.nupkg.sha512",
+        "cocontra.nuspec",
+        "lib/net40/CoContra.net40.dll",
+        "lib/net45/CoContra.net45.dll",
+        "lib/netstandard1.0/CoContra.netstandard1.0.dll"
+      ]
+    },
+    "EntityFrameworkCore.Triggers/1.0.5": {
+      "sha512": "QxJnZdB+PJfDzC3hNKzs/BvHVknWN4vbnYUF2wUGiJjmcJeol/cbVtzgmqwwEhqVnG7DyXAFS4H7ipJvZVWo2Q==",
+      "type": "package",
+      "path": "entityframeworkcore.triggers/1.0.5",
+      "files": [
+        "entityframeworkcore.triggers.1.0.5.nupkg.sha512",
+        "entityframeworkcore.triggers.nuspec",
+        "lib/net451/EntityFrameworkCore.Triggers.net451.dll",
+        "lib/netstandard1.3/EntityFrameworkCore.Triggers.netstandard1.3.dll"
+      ]
+    },
+    "EntityFrameworkCore.TypedOriginalValues/1.0.3": {
+      "sha512": "NnBG9dfkhfg1m0Qz+77EA7KM4B4+7xoJvhO6KbuPlPHiAEn/7TankFbTtqluX14R5xOCMlOF7GGg+zNFNylATw==",
+      "type": "package",
+      "path": "entityframeworkcore.typedoriginalvalues/1.0.3",
+      "files": [
+        "entityframeworkcore.typedoriginalvalues.1.0.3.nupkg.sha512",
+        "entityframeworkcore.typedoriginalvalues.nuspec",
+        "lib/net451/EntityFrameworkCore.TypedOriginalValues.dll",
+        "lib/netstandard1.3/EntityFrameworkCore.TypedOriginalValues.dll"
+      ]
+    },
     "Libuv/1.9.1": {
       "sha512": "juL77bbBrg2KNsqMFyOI+sLKrnWxEwpJvNCRus1Ie4JWh53l/NN1EnWJAxNIEzu0JijrLMN5Lo4jbwIWqmPXsg==",
       "type": "package",
@@ -10114,6 +10194,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "EntityFrameworkCore.Triggers >= 1.0.5",
       "Microsoft.AspNetCore.Diagnostics >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 1.1.0",
       "Microsoft.AspNetCore.Mvc >= 1.1.1",

@@ -11,8 +11,15 @@ namespace CakeExchange.Controllers
         {
             using (ExchangeContext dbContext = new ExchangeContext())
             {
-                ViewBag.BuyOrders = dbContext.BuyOrders.OrderByDescending(o=>o.Price).ToList();
-                ViewBag.SellOrders = dbContext.SellOrders.OrderBy(o=>o.Price).ToList();
+                ViewBag.BuyOrders = dbContext.BuyOrders
+                    .Where(o=>o.IsActive)
+                    .OrderByDescending(o=>o.Price)
+                    .ToList();
+
+                ViewBag.SellOrders = dbContext.SellOrders
+                    .Where(o=>o.IsActive)
+                    .OrderBy(o=>o.Price)
+                    .ToList();
             }
             return View();
         }

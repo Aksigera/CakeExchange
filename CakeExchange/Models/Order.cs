@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CakeExchange.Attributes;
+using EntityFrameworkCore.Triggers;
 
 namespace CakeExchange.Models
 {
@@ -21,7 +22,7 @@ namespace CakeExchange.Models
         [Required]
         public int Number
         {
-            get {return _number;}
+            get { return _number; }
             set
             {
                 if (value == 0) IsActive = false;
@@ -39,6 +40,8 @@ namespace CakeExchange.Models
         {
             Date = DateTime.UtcNow;
             IsActive = true;
+
+            Triggers<Order>.Inserted += entry => Transaction.Try();
         }
     }
 }
