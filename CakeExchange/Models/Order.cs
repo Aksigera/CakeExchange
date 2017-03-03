@@ -1,10 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
 using CakeExchange.Attributes;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CakeExchange.Models
 {
@@ -15,20 +12,33 @@ namespace CakeExchange.Models
         [Required]
         [Positive]
         [Column(TypeName = "decimal(10,2)")]
-        [DecimalAttribute]
+        [Decimal]
         public decimal Price { get; set; }
 
-//        [Positive]
+        private int _number;
+
+        [Positive]
         [Required]
-        public int Number { get; set; }
+        public int Number
+        {
+            get {return _number;}
+            set
+            {
+                if (value == 0) IsActive = false;
+                _number = value;
+            }
+        }
 
         public string Comment { get; set; }
 
         public DateTime Date { get; set; }
 
+        public bool IsActive { get; set; }
+
         protected Order()
         {
             Date = DateTime.UtcNow;
+            IsActive = true;
         }
     }
 }

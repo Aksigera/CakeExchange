@@ -25,6 +25,8 @@ namespace CakeExchange.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<int>("Number");
 
                     b.Property<decimal>("Price")
@@ -44,6 +46,8 @@ namespace CakeExchange.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<int>("Number");
 
                     b.Property<decimal>("Price")
@@ -52,6 +56,41 @@ namespace CakeExchange.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SellOrders");
+                });
+
+            modelBuilder.Entity("CakeExchange.Models.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BuyId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("SellId");
+
+                    b.Property<int>("Size");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyId");
+
+                    b.HasIndex("SellId");
+
+                    b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("CakeExchange.Models.Transaction", b =>
+                {
+                    b.HasOne("CakeExchange.Models.Buy", "Buy")
+                        .WithMany()
+                        .HasForeignKey("BuyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CakeExchange.Models.Sell", "Sell")
+                        .WithMany()
+                        .HasForeignKey("SellId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
