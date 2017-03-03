@@ -1,10 +1,7 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using CakeExchange.Data;
 using CakeExchange.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CakeExchange.Controllers
 {
@@ -14,8 +11,8 @@ namespace CakeExchange.Controllers
         {
             using (ExchangeContext dbContext = new ExchangeContext())
             {
-                ViewBag.BuyOrders = dbContext.BuyOrders.ToList();
-                ViewBag.SellOrders = dbContext.SellOrders.ToList();
+                ViewBag.BuyOrders = dbContext.BuyOrders.OrderByDescending(o=>o.Price).ToList();
+                ViewBag.SellOrders = dbContext.SellOrders.OrderBy(o=>o.Price).ToList();
             }
             return View();
         }

@@ -7,6 +7,7 @@ namespace CakeExchange.Data
     {
         public DbSet<Buy> BuyOrders { get; set; }
         public DbSet<Sell> SellOrders { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
