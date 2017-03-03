@@ -7,11 +7,16 @@
 </head>
 <body>
 <div class="make-order">
-    @Html.Partial("Partials/_Buy", (IEnumerable<Order>)ViewBag.SellOrders)
+    @Html.Partial("Partials/Buy", (IEnumerable<Order>)ViewBag.SellOrders)
 </div>
 <div class="make-order">
-    @Html.Partial("Partials/_Sell", (IEnumerable<Order>)ViewBag.BuyOrders)
+    @Html.Partial("Partials/Sell", (IEnumerable<Order>)ViewBag.BuyOrders)
 </div>
+
+<div class="transactions--completed">
+    @Html.Partial("Partials/CompletedTransactions", (IEnumerable<Transaction>)ViewBag.Transactions)
+</div>
+
 
 </body>
 </html>
