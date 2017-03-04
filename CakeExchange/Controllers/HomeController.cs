@@ -10,6 +10,7 @@ namespace CakeExchange.Controllers
     {
         public IActionResult Index()
         {
+//            var a = ModelState;
             using (ExchangeContext dbContext = new ExchangeContext())
             {
                 ViewBag.BuyOrders = dbContext.BuyOrders
@@ -34,6 +35,9 @@ namespace CakeExchange.Controllers
         [HttpPost]
         public IActionResult Buy(Buy buyOrder)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Index");
+
             using (ExchangeContext dbContext = new ExchangeContext())
             {
                 dbContext.BuyOrders.Add(buyOrder);
@@ -46,6 +50,9 @@ namespace CakeExchange.Controllers
         [HttpPost]
         public IActionResult Sell(Sell sellOrder)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction("Index");
+
             using (ExchangeContext dbContext = new ExchangeContext())
             {
                 dbContext.SellOrders.Add(sellOrder);
