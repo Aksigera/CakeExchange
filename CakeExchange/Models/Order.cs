@@ -11,14 +11,15 @@ namespace CakeExchange.Models
         public int Id { get; set; }
 
         [Required]
-        [Positive]
+        [Positive(ErrorMessage = "Цена должна быть не ниже 0")]
         [Column(TypeName = "decimal(10,2)")]
         [Decimal]
+        [Display(Name="Цена")]
         public decimal Price { get; set; }
 
         private int _number;
 
-        [Positive]
+        [Positive(ErrorMessage = "Количество должно быть не ниже 0")]
         [Required]
         public int Number
         {

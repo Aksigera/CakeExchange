@@ -1,10 +1,16 @@
-﻿@model string
+﻿@model Order
 
-@using (Html.BeginForm(Model, "Home", FormMethod.Post))
-{
-    <input type="number" name="Price" step="0.01" placeholder="Цена за штуку">
-    <input type="number" name="Number" step="1" placeholder="Количество">
-    <input type="text" name="Comment" placeholder="Комментарий">
+<form asp-action="@Model.GetType().Name" asp-controller="Home" asp-anti-forgery="true">
 
-    <input type="submit" value="@(Model == "Buy" ? "Купить" : "Продать")"> @*TODO: use localization*@
-}
+    <input type="number" asp-for="Price" step="0.01" placeholder="Цена за штуку"/>
+    <span asp-validation-for="Price" />
+
+    <input type="number" asp-for="Number" step="1" placeholder="Количество"/>
+    <span asp-validation-for="Number" />
+
+    <input type="text" asp-for="Comment" placeholder="Комментарий"/>
+    <span asp-validation-for="Comment" />
+
+    <input type="submit" value="@(Model.GetType().Name == "Buy" ? "Купить" : "Продать")"> @*TODO: use localization*@
+
+</form>

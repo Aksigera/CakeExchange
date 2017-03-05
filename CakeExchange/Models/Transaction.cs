@@ -43,11 +43,13 @@ namespace CakeExchange.Models
                 Buy buyHighest = dbContext.BuyOrders
                     .Where(o => o.IsActive)
                     .OrderByDescending(o => o.Price)
+                    .ThenBy(o => o.Date)
                     .FirstOrDefault();
 
                 Sell sellLowest = dbContext.SellOrders
                     .Where(o => o.IsActive)
                     .OrderBy(o => o.Price)
+                    .ThenBy(o => o.Date)
                     .FirstOrDefault();
 
                 if (buyHighest == null || sellLowest == null)

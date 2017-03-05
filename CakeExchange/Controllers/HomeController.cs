@@ -8,27 +8,30 @@ namespace CakeExchange.Controllers
 {
     public class HomeController : Controller
     {
+        private ExchangeContext _dbContext;
+
+        public HomeController(ExchangeContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public IActionResult Index()
         {
-//            var a = ModelState;
-            using (ExchangeContext dbContext = new ExchangeContext())
-            {
-                ViewBag.BuyOrders = dbContext.BuyOrders
-                    .Where(o => o.IsActive)
-                    .OrderByDescending(o => o.Price)
-                    .ToList();
+            ViewBag.BuyOrders = _dbContext.BuyOrders
+                .Where(o => o.IsActive)
+                .OrderByDescending(o => o.Price)
+                .ToList();
 
-                ViewBag.SellOrders = dbContext.SellOrders
-                    .Where(o => o.IsActive)
-                    .OrderBy(o => o.Price)
-                    .ToList();
+            ViewBag.SellOrders = _dbContext.SellOrders
+                .Where(o => o.IsActive)
+                .OrderBy(o => o.Price)
+                .ToList();
 
-                ViewBag.Transactions = dbContext.Transactions
-                    .OrderBy(t => t.Date)
-                    .Include(t => t.Buy)
-                    .Include(t => t.Sell)
-                    .ToList();
-            }
+            ViewBag.Transactions = _dbContext.Transactions
+                .OrderBy(t => t.Date)
+                .Include(t => t.Buy)
+                .Include(t => t.Sell)
+                .ToList();
             return View();
         }
 
@@ -38,11 +41,9 @@ namespace CakeExchange.Controllers
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
-            using (ExchangeContext dbContext = new ExchangeContext())
-            {
-                dbContext.BuyOrders.Add(buyOrder);
-                dbContext.SaveChanges();
-            }
+
+            _dbContext.BuyOrders.Add(buyOrder);
+            _dbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -53,11 +54,9 @@ namespace CakeExchange.Controllers
             if (!ModelState.IsValid)
                 return RedirectToAction("Index");
 
-            using (ExchangeContext dbContext = new ExchangeContext())
-            {
-                dbContext.SellOrders.Add(sellOrder);
-                dbContext.SaveChanges();
-            }
+            _dbContext.SellOrders.Add(sellOrder);
+            _dbContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
     }
