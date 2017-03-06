@@ -2,10 +2,10 @@
 
 <form asp-action="@Model.GetType().Name" asp-controller="Home" asp-anti-forgery="true">
 
-    <input type="number" asp-for="Price" step="0.01" placeholder="Цена за штуку"/>
+    <input type="number" asp-for="Price" step="0.01" placeholder="Цена за штуку" value = ""/>
     <span asp-validation-for="Price" />
 
-    <input type="number" asp-for="Number" step="1" placeholder="Количество"/>
+    <input type="number" asp-for="Number" step="1" placeholder="Количество" value = ""/>
     <span asp-validation-for="Number" />
 
     <input type="text" asp-for="Comment" placeholder="Комментарий"/>

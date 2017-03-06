@@ -32,6 +32,7 @@ namespace CakeExchange.Controllers
                 .Include(t => t.Buy)
                 .Include(t => t.Sell)
                 .ToList();
+            
             return View();
         }
 
