@@ -22,8 +22,8 @@
             <td>@transaction.Sell.Date.ToString($"dd/mm/yyyy{Environment.NewLine}hh:mm")</td>
             <td>@transaction.Price.ToString("G29")</td>
             <td>@transaction.Size</td>
-            <td>@(transaction.Buy.Comment ?? "--")</td>
-            <td>@(transaction.Sell.Comment ?? "--")</td>
+            <td>@(transaction.Buy.Email)</td>
+            <td>@(transaction.Sell.Email)</td>
         </tr>
     }
 

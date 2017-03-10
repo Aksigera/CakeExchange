@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CakeExchange.Attributes;
-using EntityFrameworkCore.Triggers;
 
 namespace CakeExchange.Models
 {
@@ -14,7 +13,7 @@ namespace CakeExchange.Models
         [Positive(ErrorMessage = "Цена должна быть не ниже 0")]
         [Column(TypeName = "decimal(10,2)")]
         [Decimal]
-        [Display(Name="Цена")]
+        [Display(Name = "Цена")]
         public decimal Price { get; set; }
 
         private int _number;
@@ -31,7 +30,9 @@ namespace CakeExchange.Models
             }
         }
 
-        public string Comment { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -41,8 +42,6 @@ namespace CakeExchange.Models
         {
             Date = DateTime.UtcNow;
             IsActive = true;
-
-            Triggers<Order>.Inserted += entry => Transaction.Try();
         }
     }
 }

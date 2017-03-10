@@ -8,8 +8,8 @@
     <input type="number" asp-for="Number" step="1" placeholder="Количество" value = ""/>
     <span asp-validation-for="Number" />
 
-    <input type="text" asp-for="Comment" placeholder="Комментарий"/>
-    <span asp-validation-for="Comment" />
+    <input type="text" asp-for="Email" placeholder="Комментарий"/>
+    <span asp-validation-for="Email" />
 
     <input type="submit" value="@(Model.GetType().Name == "Buy" ? "Купить" : "Продать")"> @*TODO: use localization*@
 

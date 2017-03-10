@@ -9,9 +9,10 @@ using CakeExchange.Models;
 namespace CakeExchange.Migrations
 {
     [DbContext(typeof(ExchangeContext))]
-    partial class ExchangeContextModelSnapshot : ModelSnapshot
+    [Migration("20170310165044_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

@@ -4,12 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using CakeExchange.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace CakeExchange.Models
 {
     public sealed class Transaction
     {
+
+        public Transaction()
+        {
+            State = TransactionStates.NotConfirmedByAdmin;
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -25,9 +30,7 @@ namespace CakeExchange.Models
 
         public DateTime Date { get; set; }
 
-        public Transaction()
-        {
-        }
+        public TransactionStates State { get; set; }
 
         public Transaction(Buy buy, Sell sell)
         {
@@ -38,19 +41,13 @@ namespace CakeExchange.Models
 
         public static void Try()
         {
-            using (ExchangeContext dbContext = new ExchangeContext())
+            using (var dbContext = new ExchangeContext())
             {
-                Buy buyHighest = dbContext.BuyOrders
-                    .Where(o => o.IsActive)
-                    .OrderByDescending(o => o.Price)
-                    .ThenBy(o => o.Date)
-                    .FirstOrDefault();
+                Buy buyHighest = Buy.QueryFree(dbContext)
+                    .FirstOrDefault() as Buy;
 
-                Sell sellLowest = dbContext.SellOrders
-                    .Where(o => o.IsActive)
-                    .OrderBy(o => o.Price)
-                    .ThenBy(o => o.Date)
-                    .FirstOrDefault();
+                Sell sellLowest = Sell.QueryFree(dbContext)
+                    .FirstOrDefault() as Sell;
 
                 if (buyHighest == null || sellLowest == null)
                     return;
@@ -67,7 +64,7 @@ namespace CakeExchange.Models
             return Buy.Price >= Sell.Price;
         }
 
-        private void Make(DbContext dbContext)
+        private void Make(ExchangeContext dbContext)
         {
             var deal = new List<Order> {Buy, Sell};
 
@@ -82,7 +79,14 @@ namespace CakeExchange.Models
             dbContext.Add(this);
             dbContext.SaveChanges();
 
-            Transaction.Try();
+            Try();
         }
+    }
+
+    public enum TransactionStates
+    {
+        NotConfirmedByAdmin,
+        ConfirmedInProgress,
+        HasDone
     }
 }

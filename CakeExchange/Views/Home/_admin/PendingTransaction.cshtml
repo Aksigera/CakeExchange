@@ -1,0 +1,18 @@
+﻿@model Transaction
+
+
+<tr>
+    <td>@Model.Id</td>
+    <td>@Model.Date.ToString($"dd/mm/yyyy{Environment.NewLine}hh:mm")</td>
+    <td>@Model.Price.ToString("G29")</td>
+    <td>@Model.Size</td>
+
+    <td>@Html.Partial("_admin/Order", Model.Buy)</td>
+    <td>@Html.Partial("_admin/Order", Model.Sell)</td>
+    <td>
+        <form asp-action="SubmitTransaction" asp-controller="Home" asp-anti-forgery="true">
+            <input type="hidden" name="transactionId" value="@Model.Id"/>
+            <input type="submit" value="Подтвердить">
+        </form>
+    </td>
+</tr>

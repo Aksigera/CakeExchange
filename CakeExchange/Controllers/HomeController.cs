@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CakeExchange.Data;
 using CakeExchange.Models;
+using EntityFrameworkCore.Triggers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,32 +10,54 @@ namespace CakeExchange.Controllers
 {
     public class HomeController : Controller
     {
-        private ExchangeContext _dbContext;
+        private readonly ExchangeContext _dbContext;
 
         public HomeController(ExchangeContext dbContext)
         {
             _dbContext = dbContext;
+            Triggers<Order>.Inserted += entry => Transaction.Try();
         }
 
         public IActionResult Index()
         {
-            ViewBag.BuyOrders = _dbContext.BuyOrders
-                .Where(o => o.IsActive)
-                .OrderByDescending(o => o.Price)
-                .ToList();
+            ViewBag.BuyOrders = Models.Buy.QueryFree(_dbContext).ToList();
 
-            ViewBag.SellOrders = _dbContext.SellOrders
-                .Where(o => o.IsActive)
-                .OrderBy(o => o.Price)
-                .ToList();
+            ViewBag.SellOrders = Models.Sell.QueryFree(_dbContext).ToList();
 
             ViewBag.Transactions = _dbContext.Transactions
+                .Where(t => t.State == TransactionStates.HasDone)
                 .OrderBy(t => t.Date)
                 .Include(t => t.Buy)
                 .Include(t => t.Sell)
                 .ToList();
-            
+
             return View();
+        }
+
+        public IActionResult Admin()
+        {
+            ViewBag.Transactions = _dbContext.Transactions
+                .Where(t => t.State == TransactionStates.NotConfirmedByAdmin)
+                .OrderBy(t => t.Date)
+                .Include(t => t.Buy)
+                .Include(t => t.Sell)
+                .ToList();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SubmitTransaction()
+        {
+            int id = Int32.Parse(Request.Form.FirstOrDefault(p => p.Key == "transactionId").Value);
+            var transaction = _dbContext.Transactions.SingleOrDefault(e => e.Id == id);
+            if (transaction != null)
+            {
+                transaction.State = TransactionStates.NotConfirmedByAdmin;
+                _dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Admin");
         }
 
         [HttpPost]

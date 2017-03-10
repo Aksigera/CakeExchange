@@ -1,5 +1,6 @@
 ﻿using CakeExchange.Common.Binders;
 using CakeExchange.Data;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace CakeExchange
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            var client = new BackgroundJobClient();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

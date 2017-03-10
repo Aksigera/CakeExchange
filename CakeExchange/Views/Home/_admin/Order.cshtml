@@ -1,0 +1,5 @@
+﻿@model Order
+
+Дата: @Model.Date.ToString($"dd/mm/yyyy{Environment.NewLine}hh:mm") @Environment.NewLine
+Цена: @Model.Price @Environment.NewLine
+Email: @Model.Email

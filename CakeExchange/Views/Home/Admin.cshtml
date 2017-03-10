@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Cake Exchange</title>
+    <link rel="stylesheet" asp-href-include="~/css/**/*.css" asp-append-version="true"/>
+</head>
+<body>
+<h4>Завершенные сделки</h4>
+
+
+<table>
+    <tr>
+        <th>Дата</th>
+        <th>Цена</th>
+        <th>Кол-во</th>
+
+        <th>Ордер на покупку</th>
+        <th>Ордер на продажу</th>
+    </tr>
+
+    @foreach (Transaction transaction in (IEnumerable<Transaction>) ViewBag.Transactions)
+    {
+        @Html.Partial("_admin/PendingTransaction", transaction)
+    }
+
+</table >
+
+</body>
+</html>
