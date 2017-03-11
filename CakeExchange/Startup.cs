@@ -1,6 +1,6 @@
 ﻿using CakeExchange.Common.Binders;
+using CakeExchange.Common.Settings;
 using CakeExchange.Data;
-using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +19,11 @@ namespace CakeExchange
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("config.json", optional: true)
+                .AddEnvironmentVariables();
 
-            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-
-            var client = new BackgroundJobClient();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -33,10 +32,13 @@ namespace CakeExchange
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ExchangeContext>(options => options.UseSqlServer(connection));
+
             services.AddMvc(config =>
             {
                 config.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
             });
+
+            services.Configure<BackgroundJobsSettings>(Configuration.GetSection("AppSettings:BackgroundJobs"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

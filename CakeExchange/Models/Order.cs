@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CakeExchange.Attributes;
+using CakeExchange.Common.Attributes;
 
 namespace CakeExchange.Models
 {

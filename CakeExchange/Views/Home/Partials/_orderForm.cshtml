@@ -8,7 +8,7 @@
     <input type="number" asp-for="Number" step="1" placeholder="Количество" value = ""/>
     <span asp-validation-for="Number" />
 
-    <input type="text" asp-for="Email" placeholder="Комментарий"/>
+    <input type="text" asp-for="Email" placeholder="Email"/>
     <span asp-validation-for="Email" />
 
     <input type="submit" value="@(Model.GetType().Name == "Buy" ? "Купить" : "Продать")"> @*TODO: use localization*@

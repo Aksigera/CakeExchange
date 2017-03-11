@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace CakeExchange.Attributes
+namespace CakeExchange.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class DecimalAttribute : Attribute, IDecimalAttribute

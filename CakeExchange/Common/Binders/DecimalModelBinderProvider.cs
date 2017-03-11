@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using CakeExchange.Attributes;
+using CakeExchange.Common.Attributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace CakeExchange.Common.Binders

@@ -1,7 +1,7 @@
 ﻿using CakeExchange.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CakeExchange.Jobs
+namespace CakeExchange.Common.Jobs
 {
     public static class TransactionJobs
     {

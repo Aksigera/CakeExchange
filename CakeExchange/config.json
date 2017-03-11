@@ -1,0 +1,7 @@
+{
+    "AppSettings": {
+        "BackgroundJobs": {
+            "DelayMinutes": 1
+        }
+    }
+}

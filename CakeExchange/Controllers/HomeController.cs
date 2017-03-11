@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using CakeExchange.Common.Settings;
 using CakeExchange.Data;
 using CakeExchange.Models;
 using EntityFrameworkCore.Triggers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace CakeExchange.Controllers
 {
@@ -12,7 +14,7 @@ namespace CakeExchange.Controllers
     {
         private readonly ExchangeContext _dbContext;
 
-        public HomeController(ExchangeContext dbContext)
+        public HomeController(ExchangeContext dbContext, IOptions<BackgroundJobsSettings> settings)
         {
             _dbContext = dbContext;
             Triggers<Order>.Inserted += entry => Transaction.Try();

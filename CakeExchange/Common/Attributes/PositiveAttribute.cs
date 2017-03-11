@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace CakeExchange.Attributes
+namespace CakeExchange.Common.Attributes
 {
     public class PositiveAttribute : ValidationAttribute
     {

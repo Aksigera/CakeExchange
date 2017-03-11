@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CakeExchange.Attributes
+﻿namespace CakeExchange.Common.Attributes
 {
     public interface IDecimalAttribute
     {

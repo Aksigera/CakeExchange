@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CakeExchange.Attributes;
+using CakeExchange.Common.Attributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
