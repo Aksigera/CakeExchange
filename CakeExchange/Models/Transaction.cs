@@ -9,9 +9,18 @@ namespace CakeExchange.Models
 {
     public sealed class Transaction
     {
+        private readonly ExchangeContext _dbContext;
 
         public Transaction()
         {
+            Date = DateTime.UtcNow;
+            State = TransactionStates.NotConfirmedByAdmin;
+        }
+
+        public Transaction(ExchangeContext dbContext)
+        {
+            _dbContext = dbContext;
+            Date = DateTime.UtcNow;
             State = TransactionStates.NotConfirmedByAdmin;
         }
 
@@ -32,31 +41,19 @@ namespace CakeExchange.Models
 
         public TransactionStates State { get; set; }
 
-        public Transaction(Buy buy, Sell sell)
+        public void Try()
         {
-            Buy = buy;
-            Sell = sell;
-            Date = DateTime.UtcNow;
-        }
+            Buy = Buy.QueryFree(_dbContext)
+                .FirstOrDefault() as Buy;
 
-        public static void Try()
-        {
-            using (var dbContext = new ExchangeContext())
-            {
-                Buy buyHighest = Buy.QueryFree(dbContext)
-                    .FirstOrDefault() as Buy;
+            Sell = Sell.QueryFree(_dbContext)
+                .FirstOrDefault() as Sell;
 
-                Sell sellLowest = Sell.QueryFree(dbContext)
-                    .FirstOrDefault() as Sell;
+            if (Buy == null || Sell == null)
+                return;
 
-                if (buyHighest == null || sellLowest == null)
-                    return;
-
-                Transaction transaction = new Transaction(buyHighest, sellLowest);
-
-                if (transaction.IsAvailable())
-                    transaction.Make(dbContext);
-            }
+            if (IsAvailable())
+                Make(_dbContext);
         }
 
         private bool IsAvailable()
@@ -79,7 +76,7 @@ namespace CakeExchange.Models
             dbContext.Add(this);
             dbContext.SaveChanges();
 
-            Try();
+            new Transaction(_dbContext).Try();
         }
     }
 

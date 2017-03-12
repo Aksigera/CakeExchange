@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using CakeExchange.Common.Settings;
 using CakeExchange.Data;
 using CakeExchange.Models;
-using EntityFrameworkCore.Triggers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -17,7 +15,6 @@ namespace CakeExchange.Controllers
         public HomeController(ExchangeContext dbContext, IOptions<BackgroundJobsSettings> settings)
         {
             _dbContext = dbContext;
-            Triggers<Order>.Inserted += entry => Transaction.Try();
         }
 
         public IActionResult Index()
@@ -49,13 +46,12 @@ namespace CakeExchange.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitTransaction()
+        public IActionResult SubmitTransaction(int transactionId)
         {
-            int id = Int32.Parse(Request.Form.FirstOrDefault(p => p.Key == "transactionId").Value);
-            var transaction = _dbContext.Transactions.SingleOrDefault(e => e.Id == id);
+            var transaction = _dbContext.Transactions.SingleOrDefault(t => t.Id == transactionId);
             if (transaction != null)
             {
-                transaction.State = TransactionStates.NotConfirmedByAdmin;
+                transaction.State = TransactionStates.ConfirmedInProgress;
                 _dbContext.SaveChanges();
             }
 
@@ -72,6 +68,8 @@ namespace CakeExchange.Controllers
             _dbContext.BuyOrders.Add(buyOrder);
             _dbContext.SaveChanges();
 
+            new Transaction(_dbContext).Try();
+
             return RedirectToAction("Index");
         }
 
@@ -83,6 +81,8 @@ namespace CakeExchange.Controllers
 
             _dbContext.SellOrders.Add(sellOrder);
             _dbContext.SaveChanges();
+
+            new Transaction(_dbContext).Try();
 
             return RedirectToAction("Index");
         }

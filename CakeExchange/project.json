@@ -2,6 +2,7 @@
   "dependencies": {
     "EntityFrameworkCore.Triggers": "1.0.5",
     "Hangfire.AspNetCore": "1.6.9",
+    "Hangfire.SqlServer": "1.6.9",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.1",

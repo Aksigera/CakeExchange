@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using CakeExchange.Data;
 
 namespace CakeExchange.Models

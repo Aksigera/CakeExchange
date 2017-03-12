@@ -17,6 +17,35 @@
           "lib/netstandard1.0/CoContra.netstandard1.0.dll": {}
         }
       },
+      "Dapper/1.50.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.11",
+          "System.Collections.Concurrent": "4.0.12",
+          "System.Collections.NonGeneric": "4.0.1",
+          "System.Data.SqlClient": "4.1.0",
+          "System.Dynamic.Runtime": "4.0.11",
+          "System.Linq": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Reflection.Emit": "4.0.1",
+          "System.Reflection.Emit.Lightweight": "4.0.1",
+          "System.Reflection.Extensions": "4.0.1",
+          "System.Reflection.TypeExtensions": "4.1.0",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Text.RegularExpressions": "4.1.0",
+          "System.Threading": "4.0.11",
+          "System.Xml.XDocument": "4.0.11",
+          "System.Xml.XmlDocument": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Dapper.dll": {}
+        }
+      },
       "EntityFrameworkCore.Triggers/1.0.5": {
         "type": "package",
         "dependencies": {
@@ -89,6 +118,23 @@
           "lib/netstandard1.3/zh/Hangfire.Core.resources.dll": {
             "locale": "zh"
           }
+        }
+      },
+      "Hangfire.SqlServer/1.6.9": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.50.1",
+          "Hangfire.Core": "[1.6.9]",
+          "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+          "NETStandard.Library": "1.6.0",
+          "System.Data.Common": "4.1.0",
+          "System.Data.SqlClient": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Hangfire.SqlServer.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Hangfire.SqlServer.dll": {}
         }
       },
       "Libuv/1.9.1": {
@@ -3915,7 +3961,7 @@
           "System.Xml.ReaderWriter": "4.0.11"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Xml.XmlDocument.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
@@ -3976,6 +4022,23 @@
         "lib/netstandard1.0/CoContra.netstandard1.0.dll"
       ]
     },
+    "Dapper/1.50.1": {
+      "sha512": "UnvcSLoFOriBz9uMTwWmhhpvkPke91OfouxkWK+88zrFXbm38DP0MmQNjFYIsnPUnvPd/pC+nhgm+nM+mkdtTg==",
+      "type": "package",
+      "path": "dapper/1.50.1",
+      "files": [
+        "dapper.1.50.1.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net40/Dapper.dll",
+        "lib/net40/Dapper.xml",
+        "lib/net45/Dapper.dll",
+        "lib/net45/Dapper.xml",
+        "lib/net451/Dapper.dll",
+        "lib/net451/Dapper.xml",
+        "lib/netstandard1.3/Dapper.dll",
+        "lib/netstandard1.3/Dapper.xml"
+      ]
+    },
     "EntityFrameworkCore.Triggers/1.0.5": {
       "sha512": "QxJnZdB+PJfDzC3hNKzs/BvHVknWN4vbnYUF2wUGiJjmcJeol/cbVtzgmqwwEhqVnG7DyXAFS4H7ipJvZVWo2Q==",
       "type": "package",
@@ -4026,6 +4089,20 @@
         "lib/netstandard1.3/Hangfire.Core.xml",
         "lib/netstandard1.3/es/Hangfire.Core.resources.dll",
         "lib/netstandard1.3/zh/Hangfire.Core.resources.dll"
+      ]
+    },
+    "Hangfire.SqlServer/1.6.9": {
+      "sha512": "4Zv4ULyeBy/psg6vPg3idNISAQhpyZZMNWVQ2GJgoLqe91XJcbL3wp1FPdCyxCQ4J6T8Pcso2eZzShbLsJzeuQ==",
+      "type": "package",
+      "path": "hangfire.sqlserver/1.6.9",
+      "files": [
+        "hangfire.sqlserver.1.6.9.nupkg.sha512",
+        "hangfire.sqlserver.nuspec",
+        "lib/net45/Hangfire.SqlServer.dll",
+        "lib/net45/Hangfire.SqlServer.xml",
+        "lib/netstandard1.3/Hangfire.SqlServer.dll",
+        "lib/netstandard1.3/Hangfire.SqlServer.xml",
+        "tools/install.sql"
       ]
     },
     "Libuv/1.9.1": {
@@ -10429,6 +10506,7 @@
     "": [
       "EntityFrameworkCore.Triggers >= 1.0.5",
       "Hangfire.AspNetCore >= 1.6.9",
+      "Hangfire.SqlServer >= 1.6.9",
       "Microsoft.AspNetCore.Diagnostics >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 1.1.0",
       "Microsoft.AspNetCore.Mvc >= 1.1.1",

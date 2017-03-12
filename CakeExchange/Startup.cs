@@ -20,7 +20,6 @@ namespace CakeExchange
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("config.json", optional: true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -31,14 +30,14 @@ namespace CakeExchange
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<ExchangeContext>(options => options.UseSqlServer(connection));
 
-            services.AddMvc(config =>
-            {
-                config.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-            });
+            services.AddMvc(config => config.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider()));
 
             services.Configure<BackgroundJobsSettings>(Configuration.GetSection("AppSettings:BackgroundJobs"));
+
+//            services.AddHangfire(config => config.UseSqlServerStorage(Configuration["Data:WorkQueue"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,8 +56,9 @@ namespace CakeExchange
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+//            app.UseHangfireServer();
 
+            app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {

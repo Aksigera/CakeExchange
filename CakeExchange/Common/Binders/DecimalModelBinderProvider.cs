@@ -16,6 +16,7 @@ namespace CakeExchange.Common.Binders
             {
                 // Look for scrubber attributes
                 var propName = context.Metadata.PropertyName;
+                if (propName == null) return null;
                 var propInfo = context.Metadata.ContainerType.GetProperty(propName);
 
                 // Only one scrubber attribute can be applied to each property
