@@ -1,35 +1,45 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using CakeExchange.Data;
+using CakeExchange.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace CakeExchange.Services
 {
     public class MakeTransactionService : IDisposable
     {
-        private readonly DbContext _context;
+        private readonly TransactionContext _dbContext;
 
         public MakeTransactionService(IConfigurationRoot configuration)
         {
-            var builder = new DbContextOptionsBuilder();
-            builder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            _context = new DbContext(builder.Options);
+            _dbContext = new TransactionContext(configuration);
         }
 
-//            public void CreateTodoItem(TodoItem todoItem)
-//            {
-//                Console.WriteLine("Run started");
-//
-//                _context.TodoItems.Add(todoItem);
-//                _context.SaveChanges();
-//
-//                Thread.Sleep(10000);
-//
-//                Console.WriteLine("Run complete");
-//            }
+        public void ProcessTransactions()
+        {
+            Debug.WriteLine("Transactions processing started...");
+
+            var confirmedTransactions = _dbContext.Transactions
+                .Where(o => o.State == TransactionStates.ConfirmedInProgress)
+                .ToList();
+
+            Thread.Sleep(10000);
+
+            foreach (Transaction transaction in confirmedTransactions)
+            {
+                transaction.State = TransactionStates.HasDone;
+            }
+            _dbContext.SaveChanges();
+
+
+            Debug.WriteLine("Transactions processing complete.");
+        }
 
         public void Dispose()
         {
-            _context.Dispose();
+            _dbContext.Dispose();
         }
     }
 }

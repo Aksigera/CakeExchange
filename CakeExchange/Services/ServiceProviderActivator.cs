@@ -1,7 +1,7 @@
 ﻿using System;
 using Hangfire;
 
-namespace CakeExchange.Common.Jobs
+namespace CakeExchange.Services
 {
     public class ServiceProviderActivator : JobActivator
     {

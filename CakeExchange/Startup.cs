@@ -1,6 +1,9 @@
-﻿using CakeExchange.Common.Binders;
+﻿using System;
+using CakeExchange.Common.Binders;
 using CakeExchange.Common.Settings;
 using CakeExchange.Data;
+using CakeExchange.Services;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,19 +36,23 @@ namespace CakeExchange
 
             services.AddDbContext<ExchangeContext>(options => options.UseSqlServer(connection));
 
+            services.AddHangfire(config => config.UseSqlServerStorage(connection));
+
+            services.AddSingleton(new MakeTransactionService(Configuration));
+
+            services.AddSingleton(Configuration);
+
             services.AddMvc(config => config.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider()));
 
             services.Configure<BackgroundJobsSettings>(Configuration.GetSection("AppSettings:BackgroundJobs"));
-
-//            services.AddHangfire(config => config.UseSqlServerStorage(Configuration["Data:WorkQueue"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -56,7 +63,12 @@ namespace CakeExchange
                 app.UseExceptionHandler("/Home/Error");
             }
 
-//            app.UseHangfireServer();
+            GlobalConfiguration.Configuration.UseActivator(new ServiceProviderActivator(serviceProvider));
+
+            app.UseHangfireServer();
+
+            RecurringJob.AddOrUpdate(() => serviceProvider.GetService<MakeTransactionService>().ProcessTransactions(),
+                Cron.Minutely);
 
             app.UseStaticFiles();
 
